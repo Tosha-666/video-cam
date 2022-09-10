@@ -1,25 +1,27 @@
-import logo from './logo.svg';
+import { useState, useEffect, useRef } from 'react';
+import useVideoPlayer from './hooks/videoPlayer';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+ const videoPlayer = useRef(null);
+ const { pause, progress, togglePause, handleOnTimeUpdate } =
+  useVideoPlayer(videoPlayer);
+
+ useEffect(() => {
+  console.log(videoPlayer.current.currentTime);
+ });
+
+ return (
+  <div className='app'>
+   <p>Video</p>
+   <video
+    ref={videoPlayer}
+    src='http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+    // controls
+   ></video>
+   <button onClick={togglePause}></button>
+  </div>
+ );
 }
 
 export default App;
